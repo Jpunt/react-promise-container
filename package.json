@@ -1,0 +1,32 @@
+{
+  "name": "react-promise-container",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dest/index.js",
+  "scripts": {
+    "compile": "babel src --out-dir dest",
+    "prepublish": "rm -rf ./dest && npm run compile",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src --max-warnings 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://Jpunt@github.com/Jpunt/react-promise-container.git"
+  },
+  "author": "Jasper Haggenburg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jpunt/react-promise-container/issues"
+  },
+  "homepage": "https://github.com/Jpunt/react-promise-container#readme",
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-core": "^6.23.1",
+    "babel-eslint": "^7.1.1",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "eslint": "^3.16.1",
+    "eslint-plugin-babel": "^4.1.0",
+    "eslint-plugin-react": "^6.10.0"
+  }
+}
