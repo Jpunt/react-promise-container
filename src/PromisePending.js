@@ -11,8 +11,6 @@ export default class PromisePending extends React.Component {
       return this.props.component == null ? null :
         <this.props.component {...this.props.ownProps} />;
     }
-
-    // TODO: Translate to english when PromiseContainer becomes a seperate package:
-    return <p>Even geduld...</p>;
+    return null;
   }
 }

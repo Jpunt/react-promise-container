@@ -12,11 +12,6 @@ export default class PromiseRejected extends React.Component {
       return this.props.component == null ? null :
         <this.props.component {...this.props.ownProps} error={this.props.error} />;
     }
-
-    return <div>
-      <h1>Er is iets misgegaan</h1>
-      <p>{this.props.error.message}</p>
-      <pre>{this.props.error.stack}</pre>
-    </div>;
+    return null;
   }
 }
