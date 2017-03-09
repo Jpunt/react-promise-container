@@ -7,10 +7,10 @@ export default class PromisePending extends React.Component {
   };
 
   render() {
-    if (typeof this.props.component != 'undefined') {
-      return this.props.component == null ? null :
-        <this.props.component {...this.props.ownProps} />;
+    const Component = this.props.component;
+    if (Component === undefined || Component === null) {
+      return null;
     }
-    return null;
+    return <Component {...this.props.ownProps} />;
   }
 }
