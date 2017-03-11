@@ -1,7 +1,7 @@
 {
   "name": "react-promise-container",
   "version": "0.0.0",
-  "description": "",
+  "description": "PromiseContainer is a higher-order component to run a single or multiple promises, before rendering a component.",
   "homepage": "https://github.com/Jpunt/react-promise-container#readme",
   "author": "Jasper Haggenburg",
   "license": "ISC",
