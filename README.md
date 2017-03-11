@@ -1,6 +1,5 @@
-# react-promise-container
+# react-promise-container [![Build Status](https://travis-ci.org/Jpunt/react-promise-container.svg?branch=master)](https://travis-ci.org/Jpunt/react-promise-container) [![Greenkeeper badge](https://badges.greenkeeper.io/Jpunt/react-promise-container.svg)](https://greenkeeper.io/)
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/Jpunt/react-promise-container.svg)](https://greenkeeper.io/)
 PromiseContainer is a higher-order component to run a single or multiple promises, before rendering a component.
 
 ## Installation
