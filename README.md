@@ -99,6 +99,41 @@ promiseContainer(mapPromisesToProps)(
 );
 ```
 
-## TODO
-- [ ] Write documentation about `promiseContainer.refresh`
-- [ ] Write documentation about `promiseContainer.mutate` (optimistic UI)
+## Updating promises
+At some point, you'd probably want the result of a promise to be updated. For example, when you want to edit an article that you've fetched before. There are a couple of ways to do this:
+
+### `props.promiseContainer.refresh()`
+This function is passed to your component and it will rerun all promises that were given. After fulfilling the promises again, the new result will be passed by the same props. At this moment, this will not change to a pending state in the process.
+
+### `props.promiseContainer.mutate(promise, expectedResult)`
+You can use this function to implement optimistic UI. You pass it a promise (for example, to make a request to an API) and a function to describe what the expected result for this mutation is. For example, this is how you could implement a like button:
+
+```jsx
+const {addLike, removeLike, isLiking} from './like-api';
+
+class LikeButton extends React.Component {
+  render() {
+    return <button onClick={e => this.toggle(e)}>
+      {this.props.isLiking ? 'unlinke' : 'like'}
+    </button>;
+  }
+
+  toggle(e) {
+    const {mutate, refresh} = this.props.promiseContainer;
+    const saveFn = () => this.props.isLiking ? addLike() : removeLike();
+    mutate(saveFn, previousResult => {
+      return { isLiking: !previousResult.isLiking };
+    }).then(refresh);
+  }
+}
+
+function mapPromisesToProps() {
+  return {
+    isLiking: isLiking(),
+  };
+}
+
+export default promiseContainer(mapPromisesToProps)(LikeButton);
+```
+
+This will update the result of `isLiking` immediately, even before the request to save its new state is started. After the request of the mutation is done, the actual truth will be refetched. If this function fails, it will revert to the original result. Based on [this excellent article](https://www.smashingmagazine.com/2016/11/true-lies-of-optimistic-user-interfaces/#rules-of-thumb), something like this should never take more than 2 seconds, so this promise will fail if it takes more than that.
