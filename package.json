@@ -2,6 +2,16 @@
   "name": "react-promise-container",
   "version": "0.0.0",
   "description": "",
+  "homepage": "https://github.com/Jpunt/react-promise-container#readme",
+  "author": "Jasper Haggenburg",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://Jpunt@github.com/Jpunt/react-promise-container.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jpunt/react-promise-container/issues"
+  },
   "main": "dest/index.js",
   "scripts": {
     "compile": "babel src --out-dir dest",
@@ -10,16 +20,6 @@
     "test:CI": "jest src",
     "lint": "eslint src --max-warnings 0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://Jpunt@github.com/Jpunt/react-promise-container.git"
-  },
-  "author": "Jasper Haggenburg",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Jpunt/react-promise-container/issues"
-  },
-  "homepage": "https://github.com/Jpunt/react-promise-container#readme",
   "devDependencies": {
     "babel-cli": "^6.23.0",
     "babel-core": "^6.23.1",
@@ -34,5 +34,8 @@
     "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0"
   }
 }

@@ -40,7 +40,7 @@ export default function promiseContainer(getPromises, config = {}) {
         try {
           return getPromises(props);
         } catch (error) {
-          console.error(error);
+          if (!config.preventLogging) console.error(error);
           this.setState({status: REJECTED, error});
           return null;
         }
@@ -54,7 +54,7 @@ export default function promiseContainer(getPromises, config = {}) {
               return result;
             })
             .catch(error => {
-              console.error(error);
+              if (!config.preventLogging) console.error(error);
               this.setState({status: REJECTED, error});
             });
         }
