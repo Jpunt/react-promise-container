@@ -115,7 +115,7 @@ const {addLike, removeLike, isLiking} from './like-api';
 class LikeButton extends React.Component {
   render() {
     return <button onClick={e => this.toggle(e)}>
-      {this.props.isLiking ? 'unlinke' : 'like'}
+      {this.props.isLiking ? 'unlike' : 'like'}
     </button>;
   }
 
