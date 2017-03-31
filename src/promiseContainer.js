@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import Promise from 'bluebird';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 
 const PENDING = 'PENDING';
 const FULFILLED = 'FULFILLED';
@@ -115,6 +116,8 @@ export default function promiseContainer(getPromises, config = {}) {
         }
       }
     }
+
+    hoistNonReactStatic(PromiseContainer, FulfilledComponent);
     PromiseContainer.displayName = `PromiseContainer(${getDisplayName(FulfilledComponent)})`;
     return PromiseContainer;
   };

@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.0",
+    "hoist-non-react-statics": "^1.2.0",
     "lodash": "^4.17.4"
   }
 }
