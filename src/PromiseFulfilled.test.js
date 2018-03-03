@@ -1,3 +1,5 @@
+import './initTests';
+
 import React from 'react';
 import {mount} from 'enzyme';
 

@@ -1,16 +1,6 @@
 import React from 'react';
 
 export default class PromiseFulfilled extends React.Component {
-  static propTypes = {
-    component: React.PropTypes.func.isRequired,
-    ownProps: React.PropTypes.object,
-    result: React.PropTypes.object,
-    promiseContainer: React.PropTypes.shape({
-      refresh: React.PropTypes.func.isRequired,
-      mutate: React.PropTypes.func.isRequired,
-    }).isRequired,
-  };
-
   state = {
     error: null,
   };
