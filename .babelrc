@@ -2,6 +2,7 @@
   "presets": [
     "react",
     "babel-preset-es2015",
-    "babel-preset-stage-0"
+    "babel-preset-stage-0",
+    "flow"
   ]
 }

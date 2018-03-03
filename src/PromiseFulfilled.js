@@ -1,24 +1,37 @@
-import React from 'react';
+// @flow
 
-export default class PromiseFulfilled extends React.Component {
+import * as React from 'react';
+
+type Props = {
+  component: React.ComponentType<any>,
+  ownProps: ?Object,
+  result: ?Object,
+  promiseContainer: {
+    refresh: Function,
+    mutate: Function,
+  },
+};
+
+type State = {
+  error: ?Error;
+};
+
+export default class PromiseFulfilled extends React.Component<Props, State> {
   state = {
     error: null,
   };
+
+  componentDidCatch(error: Error) {
+    console.error(error.stack);
+    this.setState({error});
+  }
 
   render() {
     if (this.state.error) {
       return null;
     }
     const {ownProps, result, promiseContainer} = this.props;
-    return <this.props.component {...ownProps} {...result} promiseContainer={promiseContainer} />;
-  }
-
-  // De promise kan geslaagd zijn, maar het renderen van de fulfilled-state niet.
-  // Dit is een nieuwe feature van React die ervoor zorgt dat we iets anders kunnen
-  // renderen en de error kunnen afhandelen. Lijkt voor nu in ieder geval goed te
-  // werken, maar voor meer info zie: https://github.com/facebook/react/issues/2461
-  unstable_handleError(error) {
-    console.error(error.stack);
-    this.setState({error});
+    const Component = this.props.component;
+    return <Component {...ownProps} {...result} promiseContainer={promiseContainer} />;
   }
 }

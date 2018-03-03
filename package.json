@@ -19,13 +19,15 @@
     "test": "jest src --watch",
     "test:CI": "jest src",
     "lint": "eslint src --max-warnings 0",
-    "check": "npm run lint && npm run test"
+    "flow": "flow",
+    "check": "npm run lint && npm run flow && npm run test"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
     "babel-core": "^6.23.1",
     "babel-eslint": "^8.0.0",
     "babel-preset-es2015": "^6.22.0",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-0": "^6.22.0",
     "enzyme": "^3.3.0",
@@ -39,6 +41,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.0",
+    "flow-bin": "^0.66.0",
     "hoist-non-react-statics": "^2.5.0",
     "lodash": "^4.17.4"
   }

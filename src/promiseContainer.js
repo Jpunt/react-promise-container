@@ -1,5 +1,7 @@
+// @flow
+
 import _ from 'lodash';
-import React from 'react';
+import * as React from 'react';
 import Promise from 'bluebird';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
@@ -11,13 +13,34 @@ import PromisePending from './PromisePending';
 import PromiseFulfilled from './PromiseFulfilled';
 import PromiseRejected from './PromiseRejected';
 
-export default function promiseContainer(getPromises, config = {}) {
-  return (FulfilledComponent, PendingComponent, RejectedComponent) => {
+type Props = ?Object;
+
+type State = {
+  status: 'PENDING' | 'FULFILLED' | 'REJECTED',
+  result: ?Object,
+  error: ?Error,
+};
+
+type Config = {
+  shouldPromiseRefresh?: Function,
+  preventLogging?: boolean,
+};
+
+type ObjectWithPromises = {[string]: Promise};
+
+type GetPromises = (props: Props) => ObjectWithPromises;
+
+export default function promiseContainer(getPromises: GetPromises, config: Config = {}) {
+  return (
+    FulfilledComponent: React.ComponentType<any>,
+    PendingComponent: React.ComponentType<any>,
+    RejectedComponent: React.ComponentType<any>
+  ) => {
     if (!FulfilledComponent) {
       throw new Error('No FulfilledComponent set');
     }
 
-    class PromiseContainer extends React.Component {
+    class PromiseContainer extends React.Component<Props, State> {
       state = {
         status: PENDING,
         result: null,
@@ -29,7 +52,7 @@ export default function promiseContainer(getPromises, config = {}) {
         this.executePromise(objectWithPromises);
       }
 
-      componentWillReceiveProps(nextProps) {
+      componentWillReceiveProps(nextProps: Props) {
         if (config.shouldPromiseRefresh && config.shouldPromiseRefresh(this.props, nextProps)) {
           const objectWithPromises = this.getPromises(nextProps);
           this.setState({status: PENDING});
@@ -37,7 +60,7 @@ export default function promiseContainer(getPromises, config = {}) {
         }
       }
 
-      getPromises(props) {
+      getPromises(props: Props): ?ObjectWithPromises {
         try {
           return getPromises(props);
         } catch (error) {
@@ -47,7 +70,7 @@ export default function promiseContainer(getPromises, config = {}) {
         }
       }
 
-      executePromise(objectWithPromises) {
+      executePromise(objectWithPromises: ?ObjectWithPromises) {
         if (objectWithPromises) {
           return Promise.props(objectWithPromises)
             .then(result => {
@@ -67,7 +90,7 @@ export default function promiseContainer(getPromises, config = {}) {
         return this.executePromise(objectWithPromises);
       }
 
-      mutate(mutationPromise, getExpectedResult) {
+      mutate(mutationPromise: Promise, getExpectedResult: Function) {
         const originalResult = _.cloneDeep(this.state.result);
         const expectedResult = getExpectedResult(this.state.result);
 
