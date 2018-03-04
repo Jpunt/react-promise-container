@@ -60,6 +60,11 @@ export default function promiseContainer(getPromises: GetPromises, config: Confi
         }
       }
 
+      componentDidCatch(error: Error) {
+        console.error(error.stack);
+        this.setState({status: REJECTED, error});
+      }
+
       getPromises(props: Props): ?ObjectWithPromises {
         try {
           return getPromises(props);

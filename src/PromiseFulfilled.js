@@ -12,24 +12,8 @@ type Props = {
   },
 };
 
-type State = {
-  error: ?Error;
-};
-
-export default class PromiseFulfilled extends React.Component<Props, State> {
-  state = {
-    error: null,
-  };
-
-  componentDidCatch(error: Error) {
-    console.error(error.stack);
-    this.setState({error});
-  }
-
+export default class PromiseFulfilled extends React.Component<Props> {
   render() {
-    if (this.state.error) {
-      return null;
-    }
     const {ownProps, result, promiseContainer} = this.props;
     const Component = this.props.component;
     return <Component {...ownProps} {...result} promiseContainer={promiseContainer} />;
