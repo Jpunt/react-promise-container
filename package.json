@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.0",
-    "flow-bin": "^0.66.0",
+    "flow-bin": "^0.67.1",
     "hoist-non-react-statics": "^2.5.0",
     "lodash": "^4.17.4"
   }
