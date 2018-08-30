@@ -19,7 +19,8 @@
     "test": "jest src",
     "lint": "eslint src --max-warnings 0",
     "flow": "flow",
-    "check": "npm run lint && npm run flow && npm run test"
+    "check": "npm run lint && npm run flow && npm run test",
+    "release": "release-it"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
@@ -36,7 +37,8 @@
     "eslint-plugin-react": "^7.11.1",
     "jest": "^23.5.0",
     "react": "^16.4.2",
-    "react-dom": "^16.4.2"
+    "react-dom": "^16.4.2",
+    "release-it": "^7.6.0"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
