@@ -16,8 +16,7 @@
   "scripts": {
     "build": "babel src --out-dir dest",
     "prepublish": "rm -rf ./dest && npm run build",
-    "test": "jest src --watch",
-    "test:CI": "jest src",
+    "test": "jest src",
     "lint": "eslint src --max-warnings 0",
     "flow": "flow",
     "check": "npm run lint && npm run flow && npm run test"
