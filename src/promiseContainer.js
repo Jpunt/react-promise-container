@@ -30,12 +30,16 @@ type ObjectWithPromises = {[string]: Promise};
 
 type GetPromises = (props: Props) => ObjectWithPromises;
 
-export default function promiseContainer(getPromises: GetPromises, config: Config = {}) {
-  return (
-    FulfilledComponent: React.ComponentType<any>,
-    PendingComponent: React.ComponentType<any>,
-    RejectedComponent: React.ComponentType<any>
-  ) => {
+export default function promiseContainer(
+  getPromises: GetPromises,
+  config: Config = {},
+): (
+  FulfilledComponent?: ?React.ComponentType<any>,
+  PendingComponent?: ?React.ComponentType<any>,
+  RejectedComponent?: ?React.ComponentType<any>
+) => React.ComponentType<any>
+{
+  return (FulfilledComponent, PendingComponent, RejectedComponent) => {
     if (!FulfilledComponent) {
       throw new Error('No FulfilledComponent set');
     }
@@ -116,28 +120,34 @@ export default function promiseContainer(getPromises: GetPromises, config: Confi
       render() {
         switch (this.state.status) {
           case PENDING:
-            return <PromisePending
-              ownProps={this.props}
-              component={PendingComponent}
-            />;
+            if (PendingComponent) {
+              return <PromisePending
+                ownProps={this.props}
+                component={PendingComponent}
+              />;
+            }
 
           case REJECTED:
-            return <PromiseRejected
-              ownProps={this.props}
-              component={RejectedComponent}
-              error={this.state.error}
-            />;
+            if (RejectedComponent) {
+              return <PromiseRejected
+                ownProps={this.props}
+                component={RejectedComponent}
+                error={this.state.error}
+              />;
+            }
 
           case FULFILLED:
-            return <PromiseFulfilled
-              ownProps={this.props}
-              component={FulfilledComponent}
-              result={this.state.result}
-              promiseContainer={{
-                refresh: (...args) => this.refresh(...args),
-                mutate: (...args) => this.mutate(...args),
-              }}
-            />;
+            if (FulfilledComponent) {
+              return <PromiseFulfilled
+                ownProps={this.props}
+                component={FulfilledComponent}
+                result={this.state.result}
+                promiseContainer={{
+                  refresh: (...args) => this.refresh(...args),
+                  mutate: (...args) => this.mutate(...args),
+                }}
+              />;
+            }
 
           default:
             throw new Error(`Invalid promise status: ${this.state.status}`);
