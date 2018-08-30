@@ -13,8 +13,11 @@
     "url": "https://github.com/Jpunt/react-promise-container/issues"
   },
   "main": "dest/index.js",
+  "files": [
+    "dest"
+  ],
   "scripts": {
-    "build": "babel src --out-dir dest",
+    "build": "babel src --out-dir dest && flow-copy-source src dest",
     "prepublish": "rm -rf ./dest && npm run build",
     "test": "jest src",
     "lint": "eslint src --max-warnings 0",
@@ -35,6 +38,7 @@
     "eslint": "^5.0.0",
     "eslint-plugin-babel": "^5.0.0",
     "eslint-plugin-react": "^7.11.1",
+    "flow-copy-source": "^2.0.2",
     "jest": "^23.5.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
