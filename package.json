@@ -17,8 +17,12 @@
     "dest"
   ],
   "scripts": {
-    "build": "babel src --out-dir dest && flow-copy-source src dest",
-    "prepublish": "rm -rf ./dest && npm run build",
+    "build": "npm run build:clean && npm run build:babel && npm run build:flow && npm run build:ts",
+    "build:clean": "rm -rf ./dest",
+    "build:babel": "babel src --out-dir dest",
+    "build:flow": "flow-copy-source src dest",
+    "build:ts": "cp src/index.d.ts dest/index.d.ts",
+    "prepublish": "npm run build",
     "test": "jest src",
     "lint": "eslint src --max-warnings 0",
     "flow": "flow",
