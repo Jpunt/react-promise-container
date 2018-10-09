@@ -45,8 +45,8 @@
     "flow-bin": "^0.82.0",
     "flow-copy-source": "^2.0.2",
     "jest": "^23.6.0",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
     "release-it": "^7.6.0"
   },
   "dependencies": {
