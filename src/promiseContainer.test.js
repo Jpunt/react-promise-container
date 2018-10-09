@@ -42,7 +42,7 @@ test('renders PromiseFulfilled when fulfilled', () => {
   }));
 
   expect(wrapper.find('p').text()).toEqual('loading');
-  return Promise.delay(2).then(() => {
+  return Promise.delay(3).then(() => {
     wrapper.update();
     expect(wrapper.find('p').text()).toEqual('done with value: 42');
   });
@@ -54,7 +54,7 @@ test('renders PromiseRejected when rejected', () => {
   }));
 
   expect(wrapper.find('p').text()).toEqual('loading');
-  return Promise.delay(2).then(() => {
+  return Promise.delay(3).then(() => {
     wrapper.update();
     expect(wrapper.find('p').text()).toEqual('failed with message: failed');
   });
