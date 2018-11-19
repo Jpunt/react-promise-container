@@ -47,7 +47,7 @@
     "jest": "^23.6.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "release-it": "^7.6.1"
+    "release-it": "^8.0.0"
   },
   "dependencies": {
     "bluebird": "^3.5.2",
