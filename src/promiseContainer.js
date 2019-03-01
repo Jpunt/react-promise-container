@@ -155,10 +155,8 @@ export default function promiseContainer(
               />;
             }
             break;
-
-          default:
-            throw new Error(`Invalid promise status: ${this.state.status}`);
         }
+        throw new Error(`Invalid promise status: ${this.state.status}`);
       }
     }
 
