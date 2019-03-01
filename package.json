@@ -30,13 +30,12 @@
     "release": "release-it"
   },
   "devDependencies": {
-    "babel-cli": "^6.23.0",
-    "babel-core": "^6.26.3",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.1",
-    "babel-preset-es2015": "^6.22.0",
-    "babel-preset-flow": "^6.23.0",
-    "babel-preset-react": "^6.23.0",
-    "babel-preset-stage-0": "^6.22.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "eslint": "^5.14.1",
@@ -44,7 +43,7 @@
     "eslint-plugin-react": "^7.12.4",
     "flow-bin": "^0.94.0",
     "flow-copy-source": "^2.0.3",
-    "jest": "^23.6.0",
+    "jest": "^24.1.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "release-it": "^10.2.0"
