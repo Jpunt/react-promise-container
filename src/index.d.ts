@@ -5,7 +5,7 @@ interface ObjectWithPromises {
 }
 
 interface Config {
-  shouldPromiseRefresh?: (props: Props) => boolean,
+  shouldPromiseRefresh?: (props: Props, prevProps: Props) => boolean,
   preventLogging?: boolean,
 }
 
