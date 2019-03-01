@@ -3,7 +3,6 @@
 
 import _ from 'lodash';
 import * as React from 'react';
-import Promise from 'bluebird';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
 const PENDING = 'PENDING';
@@ -27,7 +26,8 @@ type Config = {
   preventLogging?: boolean,
 };
 
-type ObjectWithPromises = {[string]: Promise};
+type ObjectWithPromises = {[string]: Promise<any>};
+type ObjectWithResults = {[string]: any};
 
 type GetPromises = (props: Props) => ObjectWithPromises;
 
@@ -85,7 +85,7 @@ export default function promiseContainer(
 
       executePromise(objectWithPromises: ?ObjectWithPromises) {
         if (objectWithPromises) {
-          return Promise.props(objectWithPromises)
+          return promisesToProps(objectWithPromises)
             .then(result => {
               this.setState({status: FULFILLED, result});
               return result;
@@ -103,22 +103,20 @@ export default function promiseContainer(
         return this.executePromise(objectWithPromises);
       }
 
-      mutate(mutationPromise: Promise, getExpectedResult: Function) {
+      mutate(mutationPromise: () => Promise<any>, getExpectedResult: Function) {
         const originalResult = _.cloneDeep(this.state.result);
         const expectedResult = getExpectedResult(this.state.result);
 
         // Update result immediately
         this.setState({result: expectedResult});
 
-        // Trigger promise to change
-        return mutationPromise()
-          // fail before user looses attention (read: https://www.smashingmagazine.com/2016/11/true-lies-of-optimistic-user-interfaces/#rules-of-thumb)
-          .timeout(2000)
+        // Trigger promise to change, but fail before the user looses attention
+        // (read: https://www.smashingmagazine.com/2016/11/true-lies-of-optimistic-user-interfaces/#rules-of-thumb)
+        return handleTimeout(mutationPromise, 2000).catch(error => {
           // Something went wrong, put the original result back
-          .catch(error => {
-            this.setState({result: originalResult});
-            throw error;
-          });
+          this.setState({result: originalResult});
+          throw error;
+        });
       }
 
       render() {
@@ -168,4 +166,22 @@ export default function promiseContainer(
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}
+
+function promisesToProps(props: ObjectWithPromises): Promise<ObjectWithResults> {
+  const keys = Object.keys(props);
+  const values = Object.values(props);
+  return Promise.all(values).then(results => {
+    return results.reduce((acc, value, i) => ({...acc, [keys[i]]: value}), {});
+  });
+}
+
+function handleTimeout<T>(promise: () => Promise<T>, ms: number): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(reject, ms);
+    promise()
+      .then(resolve)
+      .catch(reject)
+      .then(() => clearTimeout(timeout));
+  });
 }
