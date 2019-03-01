@@ -1,3 +1,4 @@
+/* eslint-disable react/no-did-update-set-state */
 // @flow
 
 import _ from 'lodash';
@@ -45,20 +46,23 @@ export default function promiseContainer(
     }
 
     class PromiseContainer extends React.Component<Props, State> {
-      state = {
-        status: PENDING,
-        result: null,
-        error: null,
-      };
+      constructor(props: Props) {
+        super(props);
+        this.state = {
+          status: PENDING,
+          result: null,
+          error: null,
+        };
+      }
 
-      componentWillMount() {
+      componentDidMount() {
         const objectWithPromises = this.getPromises(this.props);
         this.executePromise(objectWithPromises);
       }
 
-      componentWillReceiveProps(nextProps: Props) {
-        if (config.shouldPromiseRefresh && config.shouldPromiseRefresh(this.props, nextProps)) {
-          const objectWithPromises = this.getPromises(nextProps);
+      componentDidUpdate(prevProps: Props) {
+        if (config.shouldPromiseRefresh && config.shouldPromiseRefresh(this.props, prevProps)) {
+          const objectWithPromises = this.getPromises(this.props);
           this.setState({status: PENDING});
           this.executePromise(objectWithPromises);
         }
@@ -126,6 +130,7 @@ export default function promiseContainer(
                 component={PendingComponent}
               />;
             }
+            break;
 
           case REJECTED:
             if (RejectedComponent) {
@@ -135,6 +140,7 @@ export default function promiseContainer(
                 error={this.state.error}
               />;
             }
+            break;
 
           case FULFILLED:
             if (FulfilledComponent) {
@@ -148,10 +154,9 @@ export default function promiseContainer(
                 }}
               />;
             }
-
-          default:
-            throw new Error(`Invalid promise status: ${this.state.status}`);
+            break;
         }
+        throw new Error(`Invalid promise status: ${this.state.status}`);
       }
     }
 
